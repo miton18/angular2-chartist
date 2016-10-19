@@ -22,30 +22,104 @@ Chartist component for Angular 2
 
 ## Installation
 
-Install through npm:
+### Install through npm:
 ```
-npm install --save @angular/core@2.0.0-rc.2 angular2-chartist chartist
+npm install @angular/core angular2-chartist chartist --save
+```
+### Additionally typings for the chartist library need to be installed:
+
+* For TSC <= 1.8:
+
+```
+npm install -g typings --save
+```
+```
+typings install -g dt~chartist --save
 ```
 
-Then use it in your app like so:
+* For TSC = 2.0+ typings can be installed through npm directly:
+
+```
+npm install @types/chartist --save-dev
+```
+
+### Then use it in your app like so:
+
+#### As a component
 
 ```typescript
-import { Component } from '@angular/core';
-import { ChartistComponent } from 'angular2-chartist';
+import {
+  Component
+} from '@angular/core';
+
+import {
+  ChartistComponent,
+  ChartType
+} from 'angular2-chartist';
 
 @Component({
-  selector: 'demo-app',
+  selector: 'my-element',
   directives: [ChartistComponent],
   template: `
     <x-chartist
       [data]="data"
-      [type]="type"
-      [options]="options"
-      [responsiveOptions]="responsiveOptions">
+      [type]="type">
     </x-chartist>
   `
 })
-export class DemoApp {}
+export class MyElementComponent {
+  type: ChartType;
+  data: any;
+
+  constructor() {
+    this.type = 'Bar';
+    this.data = {
+      "labels": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "series": [
+        [5, 4, 3, 7, 5, 10 ,3, 4, 8, 10 ,6, 8],
+        [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
+      ]
+    }
+  }
+}
+```
+
+#### As a module
+
+```typescript
+import {
+  NgModule
+} from '@angular/core';
+
+import {
+  ChartistModule
+} from 'angular2-chartist';
+
+import {
+  MyAppComponent
+} from './my-app';
+
+@NgModule({
+  imports: [
+    ChartistModule,
+  ],
+  bootstrap: [MyAppComponent]
+})
+export class AppModule { }
+
 ```
 
 You may also find it useful to view the [demo source](https://github.com/paradox41/angular2-chartist/blob/master/demo/demo.ts).

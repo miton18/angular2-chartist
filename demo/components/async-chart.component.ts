@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
-import { ChartistComponent, ChartType } from '../../src/chartist.component';
+import {
+  Component
+} from '@angular/core';
+
+import {
+  ChartType
+} from '../../src/chartist.component';
+
+import * as Chartist from 'chartist';
+
+declare var require: any;
 
 const data: any = require('../data.json');
 
 @Component({
   selector: 'async-chart',
-  directives: [ChartistComponent],
   template: `
     <h4>Async</h4>
     <x-chartist

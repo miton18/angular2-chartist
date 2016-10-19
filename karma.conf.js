@@ -1,4 +1,6 @@
-'use strict';
+const webpack = require('webpack');
+
+const helpers = require('./config/helpers');
 
 module.exports = function(config) {
   config.set({
@@ -14,37 +16,52 @@ module.exports = function(config) {
     webpack: {
       devtool: 'inline-source-map',
       resolve: {
-        extensions: ['', '.ts', '.js']
+        extensions: ['.ts', '.js']
       },
       module: {
-        preLoaders: [{
+        loaders: [{
+          enforce: 'pre',
           test: /\.ts$/,
           loader: 'tslint',
-          exclude: /node_modules/
-        }],
-        loaders: [{
+          include: [
+            helpers.root('src'),
+            helpers.root('test')
+          ]
+        }, {
           test: /\.ts$/,
           loader: 'ts',
-          exclude: /node_modules/
+          include: [
+            helpers.root('src'),
+            helpers.root('test')
+          ]
         }, {
           test: /\.json$/,
           loader: 'json',
-          exclude: /node_modules/
-        }],
-        postLoaders: [{
+          include: [
+            helpers.root('src'),
+            helpers.root('test')
+          ]
+        }, {
+          enforce: 'post',
           test: /\.ts$/,
           loader: 'istanbul-instrumenter',
-          exclude: /(test|node_modules)/
+          include: [
+            helpers.root('src')
+          ]
         }]
       },
-      tslint: {
-        emitErrors: false,
-        failOnHint: false
-      },
-      plugins: []
+      plugins: [
+        new webpack.LoaderOptionsPlugin({
+          tslint: {
+            emitErrors: false,
+            failOnHint: false
+          }
+        })
+      ]
     },
     webpackMiddleware: {
-      noInfo: true
+      noInfo: true,
+      stats: 'errors-only'
     },
     coverageReporter: {
       dir: 'coverage',
