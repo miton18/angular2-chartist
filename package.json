@@ -61,7 +61,7 @@
     "codelyzer": "^1.0.0-beta.2",
     "coveralls": "^2.11.14",
     "es6-shim": "^0.35.1",
-    "eslint": "^3.8.1",
+    "eslint": "^3.9.0",
     "git-scripts": "^0.2.1",
     "istanbul-instrumenter-loader": "^1.0.0",
     "jasmine-core": "^2.5.2",
